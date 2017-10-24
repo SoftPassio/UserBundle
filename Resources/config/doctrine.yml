@@ -1,0 +1,18 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    UserBundle\Doctrine\UserManager:
+        arguments:
+            $className: '%app_verk_app_user.entities.user_class%'
+        calls:
+            - method: setEncoder
+              arguments:
+                  - '@security.password_encoder'
+
+    UserBundle\Doctrine\RoleManager:
+        public: true
+        arguments:
+            $className: '%app_verk_app_user.entities.role_class%'
