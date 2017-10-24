@@ -1,4 +1,4 @@
-UserBundle\Entity\Role:
+AppVerk\UserBundle\Entity\Role:
     type: mappedSuperclass
     gedmo:
         soft_deleteable:

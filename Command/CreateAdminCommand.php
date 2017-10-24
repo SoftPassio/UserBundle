@@ -1,15 +1,15 @@
 <?php
 
-namespace UserBundle\Command;
+namespace AppVerk\UserBundle\Command;
 
-use UserBundle\Doctrine\RoleManager;
-use UserBundle\Doctrine\UserManager;
+use AppVerk\UserBundle\Doctrine\RoleManager;
+use AppVerk\UserBundle\Doctrine\UserManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use UserBundle\Entity\User;
+use AppVerk\UserBundle\Entity\User;
 
 class CreateAdminCommand extends ContainerAwareCommand
 {

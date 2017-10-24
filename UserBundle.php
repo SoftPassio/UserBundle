@@ -1,6 +1,6 @@
 <?php
 
-namespace UserBundle;
+namespace AppVerk\UserBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

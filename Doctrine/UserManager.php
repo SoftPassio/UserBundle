@@ -1,14 +1,14 @@
 <?php
 
-namespace UserBundle\Doctrine;
+namespace AppVerk\UserBundle\Doctrine;
 
-use AppBundle\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use UserBundle\Model\UserInterface;
+use AppVerk\UserBundle\Model\UserInterface;
 use Component\Doctrine\AbstractManager;
 use Component\Doctrine\UserProviderInterface;
+use Doctrine\ORM\EntityRepository;
 
 class UserManager extends AbstractManager implements UserProviderInterface
 {
@@ -28,11 +28,10 @@ class UserManager extends AbstractManager implements UserProviderInterface
     }
 
     /**
-     * @return UserRepository
+     * @return EntityRepository
      */
-    public function getRepository(): UserRepository
+    public function getRepository() : EntityRepository
     {
-        /** @var UserRepository $userRepository */
         $userRepository = $this->objectManager->getRepository($this->className);
 
         return $userRepository;

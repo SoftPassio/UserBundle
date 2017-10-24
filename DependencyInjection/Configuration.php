@@ -1,6 +1,6 @@
 <?php
 
-namespace UserBundle\DependencyInjection;
+namespace AppVerk\UserBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;

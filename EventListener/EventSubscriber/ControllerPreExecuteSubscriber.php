@@ -1,14 +1,14 @@
 <?php
 
-namespace UserBundle\EventListener\EventSubscriber;
+namespace AppVerk\UserBundle\EventListener\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use UserBundle\Entity\User;
-use UserBundle\Service\Acl\AclProvider;
+use AppVerk\UserBundle\Entity\User;
+use AppVerk\UserBundle\Service\Acl\AclProvider;
 
 class ControllerPreExecuteSubscriber implements EventSubscriberInterface
 {

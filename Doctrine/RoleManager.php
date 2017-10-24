@@ -1,18 +1,18 @@
 <?php
 
-namespace UserBundle\Doctrine;
+namespace AppVerk\UserBundle\Doctrine;
 
-use AppBundle\Repository\RoleRepository;
-use UserBundle\Model\UserInterface;
+use AppVerk\UserBundle\Model\UserInterface;
 use Component\Doctrine\AbstractManager;
-use UserBundle\Model\RoleInterface;
+use AppVerk\UserBundle\Model\RoleInterface;
+use Doctrine\ORM\EntityRepository;
 
 class RoleManager extends AbstractManager
 {
     /**
-     * @return RoleRepository
+     * @return EntityRepository
      */
-    public function getRepository()
+    public function getRepository() : EntityRepository
     {
         $aclRepository = $this->objectManager->getRepository($this->className);
 

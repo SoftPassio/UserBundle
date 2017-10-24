@@ -1,10 +1,10 @@
 <?php
 
-namespace UserBundle\Entity;
+namespace AppVerk\UserBundle\Entity;
 
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use UserBundle\Model\User as AbstractUser;
+use AppVerk\UserBundle\Model\User as AbstractUser;
 
 abstract class User extends AbstractUser implements \Serializable
 {

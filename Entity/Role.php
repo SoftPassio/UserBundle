@@ -1,10 +1,10 @@
 <?php
 
-namespace UserBundle\Entity;
+namespace AppVerk\UserBundle\Entity;
 
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use UserBundle\Model\Role as AbstractRole;
+use AppVerk\UserBundle\Model\Role as AbstractRole;
 
 abstract class Role extends AbstractRole
 {

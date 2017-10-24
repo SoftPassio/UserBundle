@@ -1,6 +1,6 @@
 <?php
 
-namespace UserBundle\Model;
+namespace AppVerk\UserBundle\Model;
 
 interface UserInterface
 {

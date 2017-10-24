@@ -1,6 +1,6 @@
 <?php
 
-namespace UserBundle\Util;
+namespace AppVerk\UserBundle\Util;
 
 use Component\Util\TokenGeneratorInterface;
 

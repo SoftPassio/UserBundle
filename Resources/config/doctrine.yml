@@ -4,7 +4,7 @@ services:
         autoconfigure: true
         public: false
 
-    UserBundle\Doctrine\UserManager:
+    AppVerk\UserBundle\Doctrine\UserManager:
         arguments:
             $className: '%app_verk_app_user.entities.user_class%'
         calls:
@@ -12,7 +12,7 @@ services:
               arguments:
                   - '@security.password_encoder'
 
-    UserBundle\Doctrine\RoleManager:
+    AppVerk\UserBundle\Doctrine\RoleManager:
         public: true
         arguments:
             $className: '%app_verk_app_user.entities.role_class%'

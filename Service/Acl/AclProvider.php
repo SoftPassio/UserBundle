@@ -1,10 +1,10 @@
 <?php
 
-namespace UserBundle\Service\Acl;
+namespace AppVerk\UserBundle\Service\Acl;
 
 use Symfony\Component\Yaml\Yaml;
-use UserBundle\Entity\Role;
-use UserBundle\Entity\User;
+use AppVerk\UserBundle\Entity\Role;
+use AppVerk\UserBundle\Entity\User;
 
 class AclProvider
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace UserBundle\Model;
+namespace AppVerk\UserBundle\Model;
 
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 

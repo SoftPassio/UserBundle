@@ -1,6 +1,6 @@
 <?php
 
-namespace UserBundle\Security\User;
+namespace AppVerk\UserBundle\Security\User;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;

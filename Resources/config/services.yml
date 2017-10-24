@@ -8,18 +8,18 @@ services:
 
     # makes classes in src/UserBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    UserBundle\:
+    AppVerk\UserBundle\:
         resource: '../../*'
         # you can exclude directories or files
         # but if a service is unused, it's removed anyway
         exclude: '../../{Entity,Repository,Tests,Doctrine}'
 
-    UserBundle\EventListener\EventSubscriber\ControllerPreExecuteSubscriber:
+    AppVerk\UserBundle\EventListener\EventSubscriber\ControllerPreExecuteSubscriber:
         arguments:
             $aclEnabled: '%app_verk_app_user.acl_enabled%'
             $environment: '%kernel.environment%'
 
-    UserBundle\Service\Acl\AclProvider:
+    AppVerk\UserBundle\Service\Acl\AclProvider:
         arguments:
             $rootDir: '%kernel.root_dir%'
             $aclEnabled: '%app_verk_app_user.acl_enabled%'

@@ -1,6 +1,6 @@
 <?php
 
-namespace UserBundle\DependencyInjection;
+namespace AppVerk\UserBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
