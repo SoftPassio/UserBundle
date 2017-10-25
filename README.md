@@ -1,7 +1,7 @@
 Appverk UserBundle documentation v1.0.2
 =======================================
 
-Simple and lightweight bundle Symfony 3.3 projects. Provides user and
+Simple and lightweight User bundle for Symfony 3.3 projects. Provides user and
 role functionalities with ACL support.
 
 Installation:
