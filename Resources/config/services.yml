@@ -4,7 +4,7 @@ services:
         autoconfigure: true
         public: false
 
-    Component\Util\TokenGeneratorInterface: '@UserBundle\Util\TokenGenerator'
+    AppVerk\Component\Util\TokenGeneratorInterface: '@UserBundle\Util\TokenGenerator'
 
     # makes classes in src/UserBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
