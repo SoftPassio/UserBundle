@@ -6,7 +6,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use AppVerk\UserBundle\Model\UserInterface;
-use Component\Doctrine\AbstractManager;
+use AppVerk\UserBundle\Component\Doctrine\AbstractManager;
 use Doctrine\ORM\EntityRepository;
 
 class UserManager extends AbstractManager
