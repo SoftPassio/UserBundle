@@ -37,8 +37,8 @@ Add a new config file, for example user.yml
 
  user:
      entities:
-         user_class: #E.g. AppBundleEntityUser 
-         role_class: #E.g. AppBundleEntityRole
+         user_class: #E.g. AppBundle\Entity\User 
+         role_class: #E.g. AppBundle\Entity\Role
 
      acl_enabled: #true|false defines to use or not to use ACL
 
@@ -101,6 +101,11 @@ annotation)*
 Run 
 ~~~~
     php bin/console doctrine:schema:update --force
+~~~~
+
+Now You can create admin user with command line:
+~~~~
+    php bin/console user:create:admin <username> <email> <password>
 ~~~~
 
 ACL

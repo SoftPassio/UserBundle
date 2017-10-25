@@ -6,11 +6,10 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use AppVerk\UserBundle\Model\UserInterface;
-use AppVerk\UserBundle\Component\Doctrine\AbstractManager;
-use AppVerk\UserBundle\Component\Doctrine\UserProviderInterface;
+use Component\Doctrine\AbstractManager;
 use Doctrine\ORM\EntityRepository;
 
-class UserManager extends AbstractManager implements UserProviderInterface
+class UserManager extends AbstractManager
 {
     /**
      * @var UserPasswordEncoder
@@ -22,11 +21,6 @@ class UserManager extends AbstractManager implements UserProviderInterface
         parent::__construct($className, $objectManager);
     }
 
-    public function loadUserByUsername(string $username): UserInterface
-    {
-        return $this->getRepository()->loadUserByUsername($username);
-    }
-
     /**
      * @return EntityRepository
      */
@@ -35,11 +29,6 @@ class UserManager extends AbstractManager implements UserProviderInterface
         $userRepository = $this->objectManager->getRepository($this->className);
 
         return $userRepository;
-    }
-
-    public function findUserByUsername(string $username)
-    {
-        return $this->getRepository()->findUserByUsername($username);
     }
 
     public function createUser($username, $email, $password, $role)
@@ -55,11 +44,6 @@ class UserManager extends AbstractManager implements UserProviderInterface
     public function setEncoder(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
-    }
-
-    public function findUserByEmail(string $email)
-    {
-        return $this->getRepository()->findUserByEmail($email);
     }
 
     public function generateSalt()
@@ -93,16 +77,6 @@ class UserManager extends AbstractManager implements UserProviderInterface
         return $this->encoder->encodePassword($user, $password);
     }
 
-    public function getUsersQuery(array $filters = [])
-    {
-        return $this->getRepository()->getUsersQuery($filters);
-    }
-
-    public function getUsersCount()
-    {
-        return $this->getRepository()->getUsersCount();
-    }
-
     public function removeUser(UserInterface $user)
     {
         $user = $this->softRemove($user);
@@ -121,5 +95,15 @@ class UserManager extends AbstractManager implements UserProviderInterface
         $this->objectManager->flush();
 
         return $user;
+    }
+
+    public function findUserByEmail(string $email)
+    {
+        return $this->getRepository()->findOneBy(['email' => $email, 'enabled' => true]);
+    }
+
+    public function findUserByUsername(string $username)
+    {
+        return $this->getRepository()->findOneBy(['username' => $username, 'enabled' => true]);
     }
 }

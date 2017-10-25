@@ -3,7 +3,7 @@
 namespace AppVerk\UserBundle\Doctrine;
 
 use AppVerk\UserBundle\Model\UserInterface;
-use AppVerk\UserBundle\Component\Doctrine\AbstractManager;
+use Component\Doctrine\AbstractManager;
 use AppVerk\UserBundle\Model\RoleInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -34,16 +34,6 @@ class RoleManager extends AbstractManager
     public function findRoleByName($name)
     {
         return $this->getRepository()->findOneBy(['name' => $name]);
-    }
-
-    public function getRolesQuery(array $filters = [])
-    {
-        return $this->getRepository()->getRolesQuery($filters);
-    }
-
-    public function getRolesCount()
-    {
-        return $this->getRepository()->getRolesCount();
     }
 
     public function updateRole(RoleInterface $role)
