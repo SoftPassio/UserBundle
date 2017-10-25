@@ -37,8 +37,8 @@ Add a new config file, for example user.yml
 
  user:
      entities:
-         user_class: #E.g. AppBundleEntityUser role_class: #E.g.
-         AppBundleEntityRole
+         user_class: #E.g. AppBundleEntityUser 
+         role_class: #E.g. AppBundleEntityRole
 
      acl_enabled: #true|false defines to use or not to use ACL
 
