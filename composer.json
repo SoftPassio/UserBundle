@@ -1,5 +1,5 @@
 {
-  "name": "app-verk/user-acl-bundle",
+  "name": "app-verk/user-bundle",
   "description": "Appverk user bundle",
   "type": "symfony-bundle",
   "autoload": {
