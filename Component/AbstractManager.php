@@ -1,6 +1,6 @@
 <?php
 
-namespace AppVerk\UserBundle\Component\Doctrine;
+namespace AppVerk\UserBundle\Component;
 
 use Doctrine\Common\Persistence\ObjectManager;
 

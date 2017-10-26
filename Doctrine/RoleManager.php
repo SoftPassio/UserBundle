@@ -2,8 +2,8 @@
 
 namespace AppVerk\UserBundle\Doctrine;
 
+use AppVerk\UserBundle\Component\AbstractManager;
 use AppVerk\UserBundle\Model\UserInterface;
-use AppVerk\UserBundle\Component\Doctrine\AbstractManager;
 use AppVerk\UserBundle\Model\RoleInterface;
 use Doctrine\ORM\EntityRepository;
 

@@ -2,11 +2,11 @@
 
 namespace AppVerk\UserBundle\Doctrine;
 
+use AppVerk\UserBundle\Component\AbstractManager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use AppVerk\UserBundle\Model\UserInterface;
-use AppVerk\UserBundle\Component\Doctrine\AbstractManager;
 use Doctrine\ORM\EntityRepository;
 
 class UserManager extends AbstractManager
