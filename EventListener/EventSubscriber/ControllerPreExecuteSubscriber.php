@@ -55,10 +55,13 @@ class ControllerPreExecuteSubscriber implements EventSubscriberInterface
                 preg_match('/\/_wdt/', $pathInfo) ||
                 preg_match('/\/_profiler/', $pathInfo) ||
                 preg_match('/\/_error/', $pathInfo) ||
-                preg_match('/\/doc/', $pathInfo) ||
-                preg_match('/\/translations/', $pathInfo)
+                preg_match('/\/doc/', $pathInfo)
             )
         ) {
+            return true;
+        }
+
+        if (preg_match('/\/translations/', $pathInfo)) {
             return true;
         }
 
