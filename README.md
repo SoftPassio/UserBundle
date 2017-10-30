@@ -51,7 +51,7 @@ imports:
 - { resource: user.yml }
 ~~~~
 
-Next create two entities in your bundle (E.g. AppBundleEntity):
+Next create two entities in your bundle (E.g. AppBundle\Entity):
 
 -   User
 
@@ -67,7 +67,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User extends AbstractUser implements EntityInterface
+class User extends AbstractUser
 {
 }
 ~~~~
