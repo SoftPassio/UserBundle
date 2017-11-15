@@ -5,6 +5,7 @@ services:
         public: false
 
     AppVerk\UserBundle\Doctrine\UserManager:
+        public: true
         arguments:
             $className: '%app_verk_app_user.entities.user_class%'
         calls:
