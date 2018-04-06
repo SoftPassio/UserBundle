@@ -53,7 +53,7 @@ class AclProvider
             }
         }
 
-        if (empty($this->aclConfig)) {
+        if (empty($this->aclConfig) && $this->aclEnabled) {
             throw new \Exception('acl.yml file need to be configured');
         }
     }

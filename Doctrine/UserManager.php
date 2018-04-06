@@ -6,7 +6,7 @@ use AppVerk\UserBundle\Component\AbstractManager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use AppVerk\UserBundle\Model\UserInterface;
+use AppVerk\Components\Model\UserInterface;
 use Doctrine\ORM\EntityRepository;
 
 class UserManager extends AbstractManager
@@ -26,6 +26,7 @@ class UserManager extends AbstractManager
      */
     public function getRepository() : EntityRepository
     {
+        /** @var EntityRepository $userRepository */
         $userRepository = $this->objectManager->getRepository($this->className);
 
         return $userRepository;
@@ -53,6 +54,7 @@ class UserManager extends AbstractManager
 
     private function baseCreateUser($username, $email, $password, $role)
     {
+        /** @var UserInterface $user */
         $user = new $this->className();
         $user->setSalt($this->generateSalt());
         $encodedPassword = $this->encodePassword($user, $password);

@@ -6,9 +6,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use AppVerk\UserBundle\Entity\User;
 use AppVerk\UserBundle\Service\Acl\AclProvider;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ControllerPreExecuteSubscriber implements EventSubscriberInterface
 {
@@ -26,7 +26,7 @@ class ControllerPreExecuteSubscriber implements EventSubscriberInterface
     private $aclEnabled;
     private $environment;
 
-    public function __construct(AclProvider $aclProvider, TokenStorage $tokenStorage, $aclEnabled, $environment)
+    public function __construct(AclProvider $aclProvider, TokenStorageInterface $tokenStorage, $aclEnabled, $environment)
     {
         $this->user = $tokenStorage->getToken() ? $tokenStorage->getToken()->getUser() : null;
         $this->aclProvider = $aclProvider;

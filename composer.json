@@ -11,6 +11,10 @@
     {
       "name": "Rafał Narowski",
       "email": "naros1988@o2.pl"
+    },
+    {
+      "name": "Michał Jędraszczyk",
+      "email": "michal.jedraszczyk@appverk.com"
     }
   ],
   "keywords": [
@@ -31,6 +35,7 @@
     "symfony/symfony": "^3.0",
     "egulias/email-validator": "^2.1",
     "stof/doctrine-extensions-bundle": "^1.2",
-    "jms/serializer-bundle": "^2.0"
+    "jms/serializer-bundle": "^2.0",
+    "app-verk/components": "dev-master"
   }
 }

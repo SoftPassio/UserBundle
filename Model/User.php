@@ -2,6 +2,8 @@
 
 namespace AppVerk\UserBundle\Model;
 
+use AppVerk\Components\Model\RoleInterface;
+use AppVerk\Components\Model\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 abstract class User implements UserInterface, AdvancedUserInterface
@@ -301,18 +303,6 @@ abstract class User implements UserInterface, AdvancedUserInterface
         return (bool)$this->enabled;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isSuperAdmin(): bool
-    {
-        if ($this->role && $this->role->getName() == self::ROLE_ADMIN) {
-            return true;
-        }
-
-        return false;
-    }
-
     public function isPasswordRequestNonExpired(): bool
     {
         return $this->getPasswordRequestedAt() instanceof \DateTime &&
@@ -320,8 +310,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     }
 
     /**
-     *
-     * @return (string|boolean) The user role
+     * @return array (string|boolean) The user role
      */
     public function getRoles()
     {

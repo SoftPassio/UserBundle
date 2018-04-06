@@ -2,7 +2,7 @@
 
 namespace AppVerk\UserBundle\Model;
 
-use Doctrine\Common\Collections\Collection;
+use AppVerk\Components\Model\RoleInterface;
 
 abstract class Role implements RoleInterface
 {
@@ -19,7 +19,7 @@ abstract class Role implements RoleInterface
     protected $credentials;
 
     /**
-     * @var Collection
+     * @var array
      */
     protected $users;
 
@@ -63,6 +63,7 @@ abstract class Role implements RoleInterface
      *
      * @param array $credentials
      *
+     * @return $this
      */
     public function setCredentials(array $credentials)
     {
@@ -109,7 +110,7 @@ abstract class Role implements RoleInterface
     /**
      * Get users
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return array
      */
     public function getUsers()
     {
