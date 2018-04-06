@@ -2,42 +2,24 @@
 
 namespace AppVerk\UserBundle\Doctrine;
 
-use AppVerk\UserBundle\Component\AbstractManager;
-use Doctrine\Common\Persistence\ObjectManager;
+use AppVerk\Components\Doctrine\AbstractManager;
+use AppVerk\Components\Doctrine\UserManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use AppVerk\Components\Model\UserInterface;
-use Doctrine\ORM\EntityRepository;
 
-class UserManager extends AbstractManager
+class UserManager extends AbstractManager implements UserManagerInterface
 {
     /**
      * @var UserPasswordEncoder
      */
     private $encoder;
 
-    public function __construct(string $className, ObjectManager $objectManager)
-    {
-        parent::__construct($className, $objectManager);
-    }
-
-    /**
-     * @return EntityRepository
-     */
-    public function getRepository() : EntityRepository
-    {
-        /** @var EntityRepository $userRepository */
-        $userRepository = $this->objectManager->getRepository($this->className);
-
-        return $userRepository;
-    }
-
     public function createUser($username, $email, $password, $role)
     {
         $user = $this->baseCreateUser($username, $email, $password, $role);
 
-        $this->objectManager->persist($user);
-        $this->objectManager->flush();
+        $this->persistAndFlash($user);
 
         return true;
     }
@@ -52,7 +34,7 @@ class UserManager extends AbstractManager
         return base64_encode(random_bytes(30));
     }
 
-    private function baseCreateUser($username, $email, $password, $role)
+    private function baseCreateUser($username, $email, $password, $role): UserInterface
     {
         /** @var UserInterface $user */
         $user = new $this->className();
@@ -74,7 +56,7 @@ class UserManager extends AbstractManager
         $this->objectManager->flush();
     }
 
-    public function encodePassword(UserInterface $user, $password)
+    public function encodePassword(UserInterface $user, $password): string
     {
         return $this->encoder->encodePassword($user, $password);
     }
@@ -99,13 +81,24 @@ class UserManager extends AbstractManager
         return $user;
     }
 
-    public function findUserByEmail(string $email)
+    public function findUserByEmail(string $email): UserInterface
     {
-        return $this->getRepository()->findOneBy(['email' => $email, 'enabled' => true]);
+        /** @var UserInterface $user */
+        $user = $this->getRepository()->findOneBy(['email' => $email, 'enabled' => true]);
+        return $user;
     }
 
-    public function findUserByUsername(string $username)
+    public function findUserByUsername(string $username): UserInterface
     {
-        return $this->getRepository()->findOneBy(['username' => $username, 'enabled' => true]);
+        /** @var UserInterface $user */
+        $user = $this->getRepository()->findOneBy(['username' => $username, 'enabled' => true]);
+        return $user;
+    }
+
+    public function getUser(int $id): UserInterface
+    {
+        /** @var UserInterface $user */
+        $user = $this->getRepository()->find($id);
+        return $user;
     }
 }

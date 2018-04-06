@@ -2,25 +2,15 @@
 
 namespace AppVerk\UserBundle\Doctrine;
 
-use AppVerk\UserBundle\Component\AbstractManager;
-use AppVerk\UserBundle\Model\UserInterface;
-use AppVerk\UserBundle\Model\RoleInterface;
-use Doctrine\ORM\EntityRepository;
+use AppVerk\Components\Doctrine\AbstractManager;
+use AppVerk\Components\Model\RoleInterface;
+use AppVerk\Components\Model\UserInterface;
 
 class RoleManager extends AbstractManager
 {
-    /**
-     * @return EntityRepository
-     */
-    public function getRepository() : EntityRepository
-    {
-        $aclRepository = $this->objectManager->getRepository($this->className);
-
-        return $aclRepository;
-    }
-
     public function createRole($name, $credentials)
     {
+        /** @var RoleInterface $role */
         $role = new $this->className();
         $role->setName($name);
         $role->setCredentials($credentials);
@@ -38,8 +28,7 @@ class RoleManager extends AbstractManager
 
     public function updateRole(RoleInterface $role)
     {
-        $this->objectManager->persist($role);
-        $this->objectManager->flush();
+        $this->persistAndFlash($role);
     }
 
     public function removeRole(RoleInterface $role)

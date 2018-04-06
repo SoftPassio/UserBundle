@@ -2,7 +2,7 @@
 
 namespace AppVerk\UserBundle\Security\User;
 
-use Doctrine\ORM\EntityManagerInterface;
+use AppVerk\Components\Doctrine\UserManagerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -11,11 +11,11 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 abstract class AbstractUserProvider implements UserProviderInterface
 {
     /**
-     * @var EntityManagerInterface
+     * @var UserManagerInterface
      */
-    private $entityManager;
+    protected $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(UserManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }
@@ -41,32 +41,12 @@ abstract class AbstractUserProvider implements UserProviderInterface
                 sprintf('Instances of "%s" are not supported.', get_class($user))
             );
         }
-        if (null === $reloadedUser = $this->getUserRepository()->find($user->getId())) {
+        if (null === $reloadedUser = $this->entityManager->getUser($user->getId())) {
             throw new UsernameNotFoundException(
                 sprintf('User with ID "%d" could not be refreshed.', $user->getId())
             );
         }
 
         return $reloadedUser;
-    }
-
-    /**
-     * Whether this provider supports the given user class.
-     *
-     * @param string $class
-     *
-     * @return bool
-     */
-    public function supportsClass($class)
-    {
-        return ($class === 'AppBundle\Entity\User');
-    }
-
-    /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository
-     */
-    public function getUserRepository()
-    {
-        return $this->entityManager->getRepository('AppBundle:User');
     }
 }
