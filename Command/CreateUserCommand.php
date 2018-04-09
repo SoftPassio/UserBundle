@@ -2,6 +2,7 @@
 
 namespace AppVerk\UserBundle\Command;
 
+use AppVerk\Components\Model\UserInterface;
 use AppVerk\UserBundle\Doctrine\RoleManager;
 use AppVerk\UserBundle\Doctrine\UserManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -11,20 +12,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use AppVerk\UserBundle\Entity\User;
 
-class CreateAdminCommand extends ContainerAwareCommand
+class CreateUserCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('user:create:admin')
-            ->setDescription('Creates admin user')
+            ->setName('appverk:user:create')
+            ->setDescription('Creates user with ROLE_MASTER role')
             ->addArgument('username', InputArgument::REQUIRED)
             ->addArgument('email', InputArgument::REQUIRED)
             ->addArgument('password', InputArgument::REQUIRED)
             ->setHelp(
                 <<<EOT
 Help
-
 EOT
             );
     }
@@ -42,20 +42,20 @@ EOT
 
         $user = $userManager->findUserByUsername($username);
 
-        if ($user instanceof User) {
+        if ($user instanceof UserInterface) {
             throw new \Exception("User ".$username." already exists!");
         }
 
         $userByEmail = $userManager->findUserByEmail($email);
-        if ($userByEmail instanceof User) {
+        if ($userByEmail instanceof UserInterface) {
             throw new \Exception("User email: ".$email." already exists!");
         }
-        $adminRole = $roleManager->findRoleByName('ROLE_ADMIN');
-        if (!$adminRole) {
-            $adminRole = $roleManager->createRole('ROLE_ADMIN', []);
+        $userRole = $roleManager->findRoleByName(User::ROLE_MASTER);
+        if (!$userRole) {
+            $userRole = $roleManager->createRole(User::ROLE_MASTER, []);
         }
 
-        $status = $userManager->createUser($username, $email, $password, $adminRole);
+        $status = $userManager->createUser($username, $email, $password, $userRole);
 
         $io = new SymfonyStyle($input, $output);
         if ($status === true) {

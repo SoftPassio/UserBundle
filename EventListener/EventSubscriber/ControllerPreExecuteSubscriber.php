@@ -45,7 +45,7 @@ class ControllerPreExecuteSubscriber implements EventSubscriberInterface
     {
         $pathInfo = $controllerEvent->getRequest()->getPathInfo();
 
-        if ($this->user instanceof User && $this->user->isSuperAdmin() === true) {
+        if ($this->user instanceof User) {
             return true;
         }
 

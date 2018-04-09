@@ -8,6 +8,8 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 abstract class User implements UserInterface, AdvancedUserInterface
 {
+    const ROLE_MASTER = 'ROLE_MASTER';
+
     protected $id;
 
     /**
@@ -41,9 +43,9 @@ abstract class User implements UserInterface, AdvancedUserInterface
     protected $salt;
 
     /**
-     * @var RoleInterface
+     * @var array
      */
-    protected $role;
+    protected $roles;
 
     /**
      * @var boolean
@@ -177,9 +179,9 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @return mixed
      */
-    public function getRole()
+    public function getRoles()
     {
-        return $this->role;
+        return $this->roles;
     }
 
     /**
@@ -309,18 +311,12 @@ abstract class User implements UserInterface, AdvancedUserInterface
             $this->getPasswordRequestedAt()->getTimestamp() + self::TOKEN_TTL > time();
     }
 
-    /**
-     * @return array (string|boolean) The user role
-     */
-    public function getRoles()
+    public function hasRole(string $searchRole)
     {
-        return [$this->role->getName()];
-    }
-
-    public function hasRole(string $role)
-    {
-        if ($this->role && $this->role->getName() == $role) {
-            return true;
+        foreach ($this->roles as $role){
+            if((string)$role === (string)$searchRole){
+                return true;
+            }
         }
 
         return false;
@@ -329,13 +325,26 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * Set role
      *
-     * @param RoleInterface $role
+     * @param RoleInterface $newRole
      *
      * @return User
      */
-    public function setRole(RoleInterface $role = null)
+    public function addRole(RoleInterface $newRole = null)
     {
-        $this->role = $role;
+        if($this->hasRole($newRole)){
+            return $this;
+        }
+        $this->roles[] = (string)$newRole;
+
+        return $this;
+    }
+
+    public function removeRole(RoleInterface $role)
+    {
+        if (false !== $key = array_search($role, $this->roles, true)) {
+            unset($this->roles[$key]);
+            $this->roles = array_values($this->roles);
+        }
 
         return $this;
     }

@@ -42,7 +42,7 @@ class UserManager extends AbstractManager implements UserManagerInterface
         $encodedPassword = $this->encodePassword($user, $password);
 
         $user->setPassword($encodedPassword);
-        $user->setRole($role);
+        $user->addRole($role);
         $user->setEmail($email);
         $user->setUsername($username);
         $user->setEnabled(true);
@@ -81,24 +81,42 @@ class UserManager extends AbstractManager implements UserManagerInterface
         return $user;
     }
 
-    public function findUserByEmail(string $email): UserInterface
+    public function findUserByEmail(string $email): ?UserInterface
     {
         /** @var UserInterface $user */
         $user = $this->getRepository()->findOneBy(['email' => $email, 'enabled' => true]);
         return $user;
     }
 
-    public function findUserByUsername(string $username): UserInterface
+    public function findUserByUsername(string $username): ?UserInterface
     {
         /** @var UserInterface $user */
         $user = $this->getRepository()->findOneBy(['username' => $username, 'enabled' => true]);
         return $user;
     }
 
-    public function getUser(int $id): UserInterface
+    public function getUser(int $id): ?UserInterface
     {
         /** @var UserInterface $user */
         $user = $this->getRepository()->find($id);
+        return $user;
+    }
+
+    public function getUserByToken(string $token): UserInterface
+    {
+        if(!$token){
+            return null;
+        }
+
+        /** @var UserInterface $user */
+        $user = $this->getRepository()->findOneBy([
+            'passwordRequestToken' => $token,
+        ]);
+
+        if(!$user || !$user->isPasswordRequestNonExpired()){
+            return null;
+        }
+
         return $user;
     }
 }

@@ -2,9 +2,9 @@
 
 namespace AppVerk\UserBundle\Service\Acl;
 
+use AppVerk\Components\Model\RoleInterface;
+use AppVerk\Components\Model\UserInterface;
 use Symfony\Component\Yaml\Yaml;
-use AppVerk\UserBundle\Entity\Role;
-use AppVerk\UserBundle\Entity\User;
 
 class AclProvider
 {
@@ -84,7 +84,7 @@ class AclProvider
         return $choices;
     }
 
-    public function isGranted($user, $controller)
+    public function isGranted(UserInterface $user, $controller)
     {
         if ($this->aclEnabled === false) {
             return true;
@@ -94,18 +94,16 @@ class AclProvider
             return true;
         }
 
-        if ($user instanceof User === true) {
+        if ($user instanceof UserInterface === true) {
+            $userRoles = $user->getRoles();
 
-            /** @var Role $userRole */
-            $userRole = $user->getRole();
-
-            if ($userRole instanceof Role) {
-                $roleCredentials = $userRole->getCredentials();
+            /** @var RoleInterface $role */
+            foreach ($userRoles as $role){
+                $roleCredentials = $role->getCredentials();
                 if (count($roleCredentials) > 0) {
                     foreach ($roleCredentials as $credential) {
                         if ($credential == $controller) {
                             return true;
-                            break;
                         }
                     }
                 }

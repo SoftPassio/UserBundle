@@ -27,6 +27,11 @@ abstract class User extends AbstractUser implements \Serializable
         );
     }
 
+    public function unserialize($serialized)
+    {
+        return unserialize($serialized);
+    }
+
     /**
      * Get enabled
      *

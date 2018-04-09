@@ -3,6 +3,7 @@
 namespace AppVerk\UserBundle\Model;
 
 use AppVerk\Components\Model\RoleInterface;
+use AppVerk\Components\Model\UserInterface;
 
 abstract class Role implements RoleInterface
 {
@@ -95,9 +96,10 @@ abstract class Role implements RoleInterface
 
     /**
      * Remove user
-     *
+     * @param UserInterface $user
+     * @return $this
      */
-    public function removeUser($user)
+    public function removeUser(UserInterface $user)
     {
         if (false !== $key = array_search($user, $this->users, true)) {
             unset($this->users[$key]);
