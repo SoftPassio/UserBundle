@@ -2,7 +2,7 @@
 
 namespace AppVerk\UserBundle\Util;
 
-use AppVerk\UserBundle\Component\TokenGeneratorInterface;
+use AppVerk\Components\Util\TokenGeneratorInterface;
 
 class TokenGenerator implements TokenGeneratorInterface
 {

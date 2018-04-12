@@ -56,7 +56,7 @@ class UserManager extends AbstractManager implements UserManagerInterface
         $this->objectManager->flush();
     }
 
-    public function encodePassword(UserInterface $user, $password): string
+    public function encodePassword(UserInterface $user, string $password): string
     {
         return $this->encoder->encodePassword($user, $password);
     }
@@ -95,7 +95,14 @@ class UserManager extends AbstractManager implements UserManagerInterface
         return $user;
     }
 
-    public function getUser(int $id): ?UserInterface
+    public function findUserByPassword(string $password): ?UserInterface
+    {
+        /** @var UserInterface $user */
+        $user = $this->getRepository()->findOneBy(['password' => $password]);
+        return $user;
+    }
+
+    public function getUser($id): ?UserInterface
     {
         /** @var UserInterface $user */
         $user = $this->getRepository()->find($id);

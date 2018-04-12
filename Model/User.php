@@ -10,6 +10,12 @@ abstract class User implements UserInterface, AdvancedUserInterface
 {
     const ROLE_MASTER = 'ROLE_MASTER';
 
+    /**
+     *  resetting token valid 2 days
+     */
+    const TOKEN_TTL = 172800;
+
+
     protected $id;
 
     /**
@@ -107,7 +113,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @param string $firstName
      */
-    public function setFirstName(string $firstName)
+    public function setFirstName(?string $firstName)
     {
         $this->firstName = $firstName;
     }
@@ -123,7 +129,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @param string $lastName
      */
-    public function setLastName(string $lastName)
+    public function setLastName(?string $lastName)
     {
         $this->lastName = $lastName;
     }

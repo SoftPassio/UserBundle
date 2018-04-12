@@ -29,7 +29,14 @@ abstract class User extends AbstractUser implements \Serializable
 
     public function unserialize($serialized)
     {
-        return unserialize($serialized);
+        $data = unserialize($serialized);
+        list(
+            $this->password,
+            $this->username,
+            $this->enabled,
+            $this->id,
+            $this->email,
+            ) = $data;
     }
 
     /**
