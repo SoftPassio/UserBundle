@@ -1,0 +1,6 @@
+AppVerk\UserBundle\Entity\User:
+    properties:
+        username:
+            - Regex:
+                pattern: "/^[a-zA-Z0-9_]+$/"
+                message: entity.user.username.alphanumeric

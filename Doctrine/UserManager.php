@@ -64,8 +64,7 @@ class UserManager extends AbstractManager implements UserManagerInterface
     public function removeUser(UserInterface $user)
     {
         $user = $this->softRemove($user);
-        $this->objectManager->remove($user);
-        $this->objectManager->flush();
+        $this->remove($user);
     }
 
     private function softRemove(UserInterface $user): UserInterface
