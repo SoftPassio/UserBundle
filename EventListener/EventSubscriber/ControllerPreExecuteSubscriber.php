@@ -2,6 +2,7 @@
 
 namespace AppVerk\UserBundle\EventListener\EventSubscriber;
 
+use AppVerk\Components\Model\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -45,7 +46,7 @@ class ControllerPreExecuteSubscriber implements EventSubscriberInterface
     {
         $pathInfo = $controllerEvent->getRequest()->getPathInfo();
 
-        if ($this->user instanceof User) {
+        if (!$this->user instanceof UserInterface) {
             return true;
         }
 
@@ -74,6 +75,7 @@ class ControllerPreExecuteSubscriber implements EventSubscriberInterface
 
         $controllerParts = explode('\\', $controllerEvent->getRequest()->attributes->get('_controller'));
         $controllerName = array_reverse($controllerParts)[0];
+
 
         if ($controllerName == self::TEST_REDIRECT_ACTION) {
             return true;

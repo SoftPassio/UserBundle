@@ -15,8 +15,12 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('app_verk_app_user', 'array')->children();
 
         $rootNode
-            ->booleanNode('acl_enabled')
-            ->defaultValue(false)
+            ->arrayNode('acl')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->booleanNode('enabled')->defaultValue(false)->end()
+                    ->scalarNode('redirect_path')->defaultValue(null)->end()
+                ->end()
             ->end();
 
         $this->addEntitiesConfig($rootNode);

@@ -17,7 +17,7 @@ class UserExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('app_verk_app_user.acl_enabled', $config['acl_enabled']);
+        $container->setParameter('app_verk_app_user.acl.enabled', $config['acl']['enabled']);
 
         foreach ($config['entities'] as $key => $entity) {
             $container->setParameter(sprintf('app_verk_app_user.entities.%s', $key), $entity);

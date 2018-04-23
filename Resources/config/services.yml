@@ -14,10 +14,10 @@ services:
 
     AppVerk\UserBundle\EventListener\EventSubscriber\ControllerPreExecuteSubscriber:
         arguments:
-            $aclEnabled: '%app_verk_app_user.acl_enabled%'
+            $aclEnabled: '%app_verk_app_user.acl.enabled%'
             $environment: '%kernel.environment%'
 
     AppVerk\UserBundle\Service\Acl\AclProvider:
         arguments:
             $rootDir: '%kernel.root_dir%'
-            $aclEnabled: '%app_verk_app_user.acl_enabled%'
+            $aclEnabled: '%app_verk_app_user.acl.enabled%'
