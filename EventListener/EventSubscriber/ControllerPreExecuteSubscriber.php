@@ -4,10 +4,11 @@ namespace AppVerk\UserBundle\EventListener\EventSubscriber;
 
 use AppVerk\Components\Model\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use AppVerk\UserBundle\Service\Acl\AclProvider;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ControllerPreExecuteSubscriber implements EventSubscriberInterface
@@ -25,13 +26,24 @@ class ControllerPreExecuteSubscriber implements EventSubscriberInterface
     private $user;
     private $aclEnabled;
     private $environment;
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+    /**
+     * @var RouterInterface
+     */
+    private $router;
 
-    public function __construct(AclProvider $aclProvider, TokenStorageInterface $tokenStorage, $aclEnabled, $environment)
+    public function __construct(AclProvider $aclProvider, TokenStorageInterface $tokenStorage, RouterInterface $router,
+        $aclEnabled, $environment)
     {
         $this->user = $tokenStorage->getToken() ? $tokenStorage->getToken()->getUser() : null;
         $this->aclProvider = $aclProvider;
         $this->aclEnabled = $aclEnabled;
         $this->environment = $environment;
+        $this->tokenStorage = $tokenStorage;
+        $this->router = $router;
     }
 
     public static function getSubscribedEvents()
@@ -82,9 +94,14 @@ class ControllerPreExecuteSubscriber implements EventSubscriberInterface
 
         $status = $this->aclProvider->isGranted($this->user, $controllerName);
         if ($status !== true) {
-            throw new AccessDeniedHttpException('Access denied.');
-        }
+            $route = $this->aclProvider->getUnauthorizedRedirect();
+            $redirectUrl = $this->router->generate($route);
 
+            $controllerEvent->setController(function() use ($redirectUrl) {
+                return new RedirectResponse($redirectUrl);
+            });
+            return false;
+        }
         return true;
     }
 }

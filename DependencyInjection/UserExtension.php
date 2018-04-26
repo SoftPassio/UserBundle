@@ -18,6 +18,7 @@ class UserExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('app_verk_app_user.acl.enabled', $config['acl']['enabled']);
+        $container->setParameter('app_verk_app_user.acl.redirect_path', $config['acl']['redirect_path']);
         $container->setParameter('app_verk_app_user.default_role', $config['default_role']);
 
         foreach ($config['entities'] as $key => $entity) {

@@ -1,4 +1,4 @@
-AppVerk\UserBundle\Model\User:
+AppVerk\UserBundle\Entity\User:
     properties:
         username:
             - Regex:

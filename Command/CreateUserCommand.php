@@ -4,6 +4,7 @@ namespace AppVerk\UserBundle\Command;
 
 use AppVerk\Components\Model\UserInterface;
 use AppVerk\UserBundle\Doctrine\UserManager;
+use AppVerk\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -38,7 +39,7 @@ EOT
 
         $user = $userManager->findUserByUsername($username);
 
-        if ($user instanceof UserInterface) {
+        if ($user instanceof User) {
             throw new \Exception("User ".$username." already exists!");
         }
 

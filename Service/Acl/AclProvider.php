@@ -14,11 +14,13 @@ class AclProvider
     private $rootDir;
 
     private $excludedControllers = [];
+    private $redirectPath;
 
-    public function __construct($rootDir, $aclEnabled)
+    public function __construct($rootDir, $aclEnabled, $redirectPath)
     {
         $this->rootDir = $rootDir;
         $this->aclEnabled = $aclEnabled;
+        $this->redirectPath = $redirectPath;
         $this->buildAclConfig();
     }
 
@@ -61,25 +63,9 @@ class AclProvider
         return $this->aclConfig;
     }
 
-    public function getAclForChoice()
+    public function getUnauthorizedRedirect()
     {
-        $choices = [];
-        foreach ($this->aclConfig['controllers'] as $controller => $methods) {
-            foreach ($methods as $method) {
-                $section = $method['section'];
-                $group = $method['group'];
-
-                if (isset($choices[$section]) && !array_key_exists($group, $choices[$section])) {
-                    $choices[$section][$group] = [];
-                }
-                $key = $method['label'];
-                $value = $controller.'::'.$method['action'];
-                $choices[$section][$group][$key] = $value;
-            }
-        }
-        ksort($choices);
-
-        return $choices;
+        return $this->redirectPath;
     }
 
     public function isGranted(UserInterface $user, $controller)

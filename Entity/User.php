@@ -1,13 +1,16 @@
 <?php
 
-namespace AppVerk\UserBundle\Model;
+namespace AppVerk\UserBundle\Entity;
 
 use AppVerk\Components\Model\UserInterface;
 use DateTime;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 abstract class User implements UserInterface
 {
-    protected $id;
+    use SoftDeleteableEntity;
+    use TimestampableEntity;
 
     /**
      * @var string
@@ -81,7 +84,7 @@ abstract class User implements UserInterface
     /**
      * @return string
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -97,7 +100,7 @@ abstract class User implements UserInterface
     /**
      * @return string
      */
-    public function getFirstName(): string
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
@@ -113,7 +116,7 @@ abstract class User implements UserInterface
     /**
      * @return string
      */
-    public function getLastName(): string
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
@@ -145,7 +148,7 @@ abstract class User implements UserInterface
     /**
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -161,7 +164,7 @@ abstract class User implements UserInterface
     /**
      * @return string
      */
-    public function getSalt(): string
+    public function getSalt(): ?string
     {
         return $this->salt;
     }
@@ -298,7 +301,7 @@ abstract class User implements UserInterface
      *
      * @see DisabledException
      */
-    public function isEnabled()
+    public function isEnabled() : bool
     {
         return (bool)$this->enabled;
     }

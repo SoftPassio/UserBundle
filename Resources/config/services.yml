@@ -21,3 +21,4 @@ services:
         arguments:
             $rootDir: '%kernel.root_dir%'
             $aclEnabled: '%app_verk_app_user.acl.enabled%'
+            $redirectPath: '%app_verk_app_user.acl.redirect_path%'

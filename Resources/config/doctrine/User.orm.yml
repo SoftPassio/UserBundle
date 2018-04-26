@@ -1,8 +1,5 @@
-AppVerk\UserBundle\Model\User:
+AppVerk\UserBundle\Entity\User:
     type: mappedSuperclass
-    gedmo:
-        soft_deleteable:
-            field_name: deletedAt
     fields:
         username:
             type: string
