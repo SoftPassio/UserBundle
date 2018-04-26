@@ -2,20 +2,11 @@
 
 namespace AppVerk\UserBundle\Model;
 
-use AppVerk\Components\Model\RoleInterface;
 use AppVerk\Components\Model\UserInterface;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use DateTime;
 
-abstract class User implements UserInterface, AdvancedUserInterface
+abstract class User implements UserInterface
 {
-    const ROLE_MASTER = 'ROLE_MASTER';
-
-    /**
-     *  resetting token valid 2 days
-     */
-    const TOKEN_TTL = 172800;
-
-
     protected $id;
 
     /**
@@ -76,7 +67,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -84,12 +75,13 @@ abstract class User implements UserInterface, AdvancedUserInterface
     public function __construct()
     {
         $this->enabled = false;
+        $this->roles = [];
     }
 
     /**
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -105,7 +97,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @return string
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -121,7 +113,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -137,7 +129,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -153,7 +145,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -169,7 +161,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @return string
      */
-    public function getSalt()
+    public function getSalt(): string
     {
         return $this->salt;
     }
@@ -185,7 +177,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @return mixed
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }
@@ -193,7 +185,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @param mixed $enabled
      */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled)
     {
         $this->enabled = $enabled;
     }
@@ -201,7 +193,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @return mixed
      */
-    public function getPasswordRequestedAt()
+    public function getPasswordRequestedAt(): ?DateTime
     {
         return $this->passwordRequestedAt;
     }
@@ -209,7 +201,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @param mixed $passwordRequestedAt
      */
-    public function setPasswordRequestedAt($passwordRequestedAt)
+    public function setPasswordRequestedAt(DateTime $passwordRequestedAt)
     {
         $this->passwordRequestedAt = $passwordRequestedAt;
     }
@@ -217,7 +209,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @return mixed
      */
-    public function getPasswordRequestToken()
+    public function getPasswordRequestToken(): ?string
     {
         return $this->passwordRequestToken;
     }
@@ -225,7 +217,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @param mixed $passwordRequestToken
      */
-    public function setPasswordRequestToken($passwordRequestToken)
+    public function setPasswordRequestToken(string $passwordRequestToken)
     {
         $this->passwordRequestToken = $passwordRequestToken;
     }
@@ -233,7 +225,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @return mixed
      */
-    public function getPhone()
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
@@ -241,7 +233,7 @@ abstract class User implements UserInterface, AdvancedUserInterface
     /**
      * @param mixed $phone
      */
-    public function setPhone($phone)
+    public function setPhone(string $phone)
     {
         $this->phone = $phone;
     }
@@ -317,10 +309,10 @@ abstract class User implements UserInterface, AdvancedUserInterface
             $this->getPasswordRequestedAt()->getTimestamp() + self::TOKEN_TTL > time();
     }
 
-    public function hasRole(string $searchRole)
+    public function hasRole(string $searchRole): bool
     {
-        foreach ($this->roles as $role){
-            if((string)$role === (string)$searchRole){
+        foreach ($this->roles as $role) {
+            if ((string)$role === (string)$searchRole) {
                 return true;
             }
         }
@@ -328,16 +320,25 @@ abstract class User implements UserInterface, AdvancedUserInterface
         return false;
     }
 
+    public function setRoles(array $roles)
+    {
+        $this->roles = [];
+        foreach ($roles as $role) {
+            $this->addRole($role);
+        }
+
+        return $this;
+    }
+
     /**
      * Set role
      *
-     * @param RoleInterface $newRole
-     *
+     * @param string $newRole
      * @return User
      */
-    public function addRole(RoleInterface $newRole = null)
+    public function addRole(string $newRole = null)
     {
-        if($this->hasRole($newRole)){
+        if ($this->hasRole($newRole)) {
             return $this;
         }
         $this->roles[] = (string)$newRole;
@@ -345,9 +346,9 @@ abstract class User implements UserInterface, AdvancedUserInterface
         return $this;
     }
 
-    public function removeRole(RoleInterface $role)
+    public function removeRole(string $role)
     {
-        if (false !== $key = array_search($role, $this->roles, true)) {
+        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
             $this->roles = array_values($this->roles);
         }
@@ -362,5 +363,30 @@ abstract class User implements UserInterface, AdvancedUserInterface
         }
 
         return $this->username ? $this->username : '';
+    }
+
+    public function serialize()
+    {
+        return serialize(
+            [
+                $this->password,
+                $this->username,
+                $this->enabled,
+                $this->id,
+                $this->email,
+            ]
+        );
+    }
+
+    public function unserialize($serialized)
+    {
+        $data = unserialize($serialized);
+        list(
+            $this->password,
+            $this->username,
+            $this->enabled,
+            $this->id,
+            $this->email,
+            ) = $data;
     }
 }

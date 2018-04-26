@@ -2,6 +2,7 @@
 
 namespace AppVerk\UserBundle\DependencyInjection;
 
+use AppVerk\Components\Model\UserInterface;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -15,6 +16,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('app_verk_app_user', 'array')->children();
 
         $rootNode
+            ->scalarNode('default_role')->defaultValue(UserInterface::ROLE_DEFAULT)->end()
             ->arrayNode('acl')
                 ->addDefaultsIfNotSet()
                 ->children()
@@ -32,11 +34,10 @@ class Configuration implements ConfigurationInterface
     {
         $rootNode
             ->arrayNode('entities')
-            ->addDefaultsIfNotSet()
-            ->children()
-            ->scalarNode('user_class')->defaultValue('AppBundle\\Entity\\User')->cannotBeEmpty()->end()
-            ->scalarNode('role_class')->defaultValue('AppBundle\\Entity\\Role')->cannotBeEmpty()->end()
-            ->end()
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('user_class')->cannotBeEmpty()->end()
+                ->end()
             ->end();
     }
 }

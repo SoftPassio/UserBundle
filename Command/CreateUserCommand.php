@@ -3,14 +3,12 @@
 namespace AppVerk\UserBundle\Command;
 
 use AppVerk\Components\Model\UserInterface;
-use AppVerk\UserBundle\Doctrine\RoleManager;
 use AppVerk\UserBundle\Doctrine\UserManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use AppVerk\UserBundle\Entity\User;
 
 class CreateUserCommand extends ContainerAwareCommand
 {
@@ -37,8 +35,6 @@ EOT
 
         /** * @var UserManager $userManager */
         $userManager = $this->getContainer()->get(UserManager::class);
-        /** * @var RoleManager $roleManager */
-        $roleManager = $this->getContainer()->get(RoleManager::class);
 
         $user = $userManager->findUserByUsername($username);
 
@@ -50,12 +46,8 @@ EOT
         if ($userByEmail instanceof UserInterface) {
             throw new \Exception("User email: ".$email." already exists!");
         }
-        $userRole = $roleManager->findRoleByName(User::ROLE_MASTER);
-        if (!$userRole) {
-            $userRole = $roleManager->createRole(User::ROLE_MASTER, []);
-        }
 
-        $status = $userManager->createUser($username, $email, $password, $userRole);
+        $status = $userManager->createUser($username, $email, $password, UserInterface::ROLE_MASTER);
 
         $io = new SymfonyStyle($input, $output);
         if ($status === true) {

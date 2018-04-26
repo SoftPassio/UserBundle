@@ -12,8 +12,3 @@ services:
             - method: setEncoder
               arguments:
                   - '@security.password_encoder'
-
-    AppVerk\UserBundle\Doctrine\RoleManager:
-        public: true
-        arguments:
-            $className: '%app_verk_app_user.entities.role_class%'
