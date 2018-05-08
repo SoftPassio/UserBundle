@@ -204,7 +204,7 @@ abstract class User implements UserInterface
     /**
      * @param mixed $passwordRequestedAt
      */
-    public function setPasswordRequestedAt(DateTime $passwordRequestedAt)
+    public function setPasswordRequestedAt(?DateTime $passwordRequestedAt)
     {
         $this->passwordRequestedAt = $passwordRequestedAt;
     }
@@ -220,7 +220,7 @@ abstract class User implements UserInterface
     /**
      * @param mixed $passwordRequestToken
      */
-    public function setPasswordRequestToken(string $passwordRequestToken)
+    public function setPasswordRequestToken(?string $passwordRequestToken)
     {
         $this->passwordRequestToken = $passwordRequestToken;
     }
