@@ -34,7 +34,7 @@ class UserManager extends AbstractManager implements UserManagerInterface
         return base64_encode(random_bytes(30));
     }
 
-    private function baseCreateUser($username, $email, $password, $role): UserInterface
+    private function baseCreateUser($username, $email, $password, $role)
     {
         /** @var UserInterface $user */
         $user = new $this->className();
@@ -56,7 +56,7 @@ class UserManager extends AbstractManager implements UserManagerInterface
         $this->objectManager->flush();
     }
 
-    public function encodePassword(UserInterface $user, string $password): string
+    public function encodePassword(UserInterface $user, $password)
     {
         return $this->encoder->encodePassword($user, $password);
     }
@@ -67,7 +67,7 @@ class UserManager extends AbstractManager implements UserManagerInterface
         $this->remove($user);
     }
 
-    private function softRemove(UserInterface $user): UserInterface
+    private function softRemove(UserInterface $user)
     {
         $rand = random_int(9, 99999);
         $user->setEnabled(false);
@@ -80,35 +80,35 @@ class UserManager extends AbstractManager implements UserManagerInterface
         return $user;
     }
 
-    public function findUserByEmail(string $email): ?UserInterface
+    public function findUserByEmail($email)
     {
         /** @var UserInterface $user */
         $user = $this->getRepository()->findOneBy(['email' => $email, 'enabled' => true]);
         return $user;
     }
 
-    public function findUserByUsername(string $username): ?UserInterface
+    public function findUserByUsername($username)
     {
         /** @var UserInterface $user */
         $user = $this->getRepository()->findOneBy(['username' => $username, 'enabled' => true]);
         return $user;
     }
 
-    public function findUserByPassword(string $password): ?UserInterface
+    public function findUserByPassword($password)
     {
         /** @var UserInterface $user */
         $user = $this->getRepository()->findOneBy(['password' => $password]);
         return $user;
     }
 
-    public function getUser($id): ?UserInterface
+    public function getUser($id)
     {
         /** @var UserInterface $user */
         $user = $this->getRepository()->find($id);
         return $user;
     }
 
-    public function getUserByToken(string $token): UserInterface
+    public function getUserByToken($token)
     {
         if(!$token){
             return null;

@@ -70,7 +70,7 @@ abstract class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
@@ -84,7 +84,7 @@ abstract class User implements UserInterface
     /**
      * @return string
      */
-    public function getUsername(): ?string
+    public function getUsername()
     {
         return $this->username;
     }
@@ -92,7 +92,7 @@ abstract class User implements UserInterface
     /**
      * @param string $username
      */
-    public function setUsername(string $username)
+    public function setUsername($username)
     {
         $this->username = $username;
     }
@@ -100,7 +100,7 @@ abstract class User implements UserInterface
     /**
      * @return string
      */
-    public function getFirstName(): ?string
+    public function getFirstName()
     {
         return $this->firstName;
     }
@@ -108,7 +108,7 @@ abstract class User implements UserInterface
     /**
      * @param string $firstName
      */
-    public function setFirstName(?string $firstName)
+    public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
     }
@@ -116,7 +116,7 @@ abstract class User implements UserInterface
     /**
      * @return string
      */
-    public function getLastName(): ?string
+    public function getLastName()
     {
         return $this->lastName;
     }
@@ -124,7 +124,7 @@ abstract class User implements UserInterface
     /**
      * @param string $lastName
      */
-    public function setLastName(?string $lastName)
+    public function setLastName($lastName)
     {
         $this->lastName = $lastName;
     }
@@ -132,7 +132,7 @@ abstract class User implements UserInterface
     /**
      * @return string
      */
-    public function getEmail(): ?string
+    public function getEmail()
     {
         return $this->email;
     }
@@ -140,7 +140,7 @@ abstract class User implements UserInterface
     /**
      * @param string $email
      */
-    public function setEmail(string $email)
+    public function setEmail($email)
     {
         $this->email = $email;
     }
@@ -148,7 +148,7 @@ abstract class User implements UserInterface
     /**
      * @return string
      */
-    public function getPassword(): ?string
+    public function getPassword()
     {
         return $this->password;
     }
@@ -156,7 +156,7 @@ abstract class User implements UserInterface
     /**
      * @param string $password
      */
-    public function setPassword(string $password)
+    public function setPassword($password)
     {
         $this->password = $password;
     }
@@ -164,7 +164,7 @@ abstract class User implements UserInterface
     /**
      * @return string
      */
-    public function getSalt(): ?string
+    public function getSalt()
     {
         return $this->salt;
     }
@@ -172,7 +172,7 @@ abstract class User implements UserInterface
     /**
      * @param string $salt
      */
-    public function setSalt(string $salt)
+    public function setSalt($salt)
     {
         $this->salt = $salt;
     }
@@ -188,7 +188,7 @@ abstract class User implements UserInterface
     /**
      * @param mixed $enabled
      */
-    public function setEnabled(bool $enabled)
+    public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
     }
@@ -196,7 +196,7 @@ abstract class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getPasswordRequestedAt(): ?DateTime
+    public function getPasswordRequestedAt()
     {
         return $this->passwordRequestedAt;
     }
@@ -204,7 +204,7 @@ abstract class User implements UserInterface
     /**
      * @param mixed $passwordRequestedAt
      */
-    public function setPasswordRequestedAt(?DateTime $passwordRequestedAt)
+    public function setPasswordRequestedAt($passwordRequestedAt)
     {
         $this->passwordRequestedAt = $passwordRequestedAt;
     }
@@ -212,7 +212,7 @@ abstract class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getPasswordRequestToken(): ?string
+    public function getPasswordRequestToken()
     {
         return $this->passwordRequestToken;
     }
@@ -220,7 +220,7 @@ abstract class User implements UserInterface
     /**
      * @param mixed $passwordRequestToken
      */
-    public function setPasswordRequestToken(?string $passwordRequestToken)
+    public function setPasswordRequestToken($passwordRequestToken)
     {
         $this->passwordRequestToken = $passwordRequestToken;
     }
@@ -228,7 +228,7 @@ abstract class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getPhone(): ?string
+    public function getPhone()
     {
         return $this->phone;
     }
@@ -236,7 +236,7 @@ abstract class User implements UserInterface
     /**
      * @param mixed $phone
      */
-    public function setPhone(string $phone)
+    public function setPhone($phone)
     {
         $this->phone = $phone;
     }
@@ -301,18 +301,18 @@ abstract class User implements UserInterface
      *
      * @see DisabledException
      */
-    public function isEnabled() : bool
+    public function isEnabled()
     {
         return (bool)$this->enabled;
     }
 
-    public function isPasswordRequestNonExpired(): bool
+    public function isPasswordRequestNonExpired()
     {
         return $this->getPasswordRequestedAt() instanceof \DateTime &&
             $this->getPasswordRequestedAt()->getTimestamp() + self::TOKEN_TTL > time();
     }
 
-    public function hasRole(string $searchRole): bool
+    public function hasRole($searchRole)
     {
         foreach ($this->roles as $role) {
             if ((string)$role === (string)$searchRole) {
@@ -339,7 +339,7 @@ abstract class User implements UserInterface
      * @param string $newRole
      * @return User
      */
-    public function addRole(string $newRole = null)
+    public function addRole($newRole = null)
     {
         if ($this->hasRole($newRole)) {
             return $this;
@@ -349,7 +349,7 @@ abstract class User implements UserInterface
         return $this;
     }
 
-    public function removeRole(string $role)
+    public function removeRole($role)
     {
         if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
