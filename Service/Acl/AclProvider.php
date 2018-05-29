@@ -27,6 +27,9 @@ class AclProvider
     private function buildAclConfig()
     {
         $bundlesDirectory = $this->rootDir.'/../src/Bundle/';
+        if(!file_exists($bundlesDirectory)){
+            $bundlesDirectory = $this->rootDir.'/../src/';
+        }
         $bundles = array_diff(scandir($bundlesDirectory), ['..', '.']);
 
         foreach ($bundles as $bundle) {
