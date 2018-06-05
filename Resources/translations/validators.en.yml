@@ -1,0 +1,8 @@
+entity:
+    user:
+        username:
+            alphanumeric: "username can only contains alphanumeric chars"
+        first_name:
+            alphanumeric: "First name can only contains alphanumeric chars"
+        last_name:
+            alphanumeric: "Last name can only contains alphanumeric chars"

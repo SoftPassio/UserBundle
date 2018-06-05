@@ -1,0 +1,8 @@
+entity:
+    user:
+        username:
+            alphanumeric: "Nazwa użytkownika przyjmuje tylko znaki alfanumeryczne"
+        first_name:
+            alphanumeric: "Imię przyjmuje tylko znaki alfanumeryczne"
+        last_name:
+            alphanumeric: "Nazwisko przyjmuje tylko znaki alfanumeryczne"
