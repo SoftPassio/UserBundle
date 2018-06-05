@@ -5,15 +5,11 @@ AppVerk\UserBundle\Entity\User:
             - Regex:
                 pattern: "/^[a-zA-Z0-9_]+$/"
                 message: entity.user.username.alphanumeric
-        password:
-            - NotBlank: ~
-            - Type:
-                type: alnum
         firstName:
-            - NotBlank: ~
-            - Type:
-                type: alnum
+            - Regex:
+                pattern: "/^[a-zA-Z0-9_ĘęÓóĄąŚśŁłŻżŹźĆćŃń]+$/"
+                message: entity.user.first_name.alphanumeric
         lastName:
-            - NotBlank: ~
-            - Type:
-                type: alnum
+            - Regex:
+                pattern: "/^[a-zA-Z0-9_ĘęÓóĄąŚśŁłŻżŹźĆćŃń]+$/"
+                message: entity.user.last_name.alphanumeric
