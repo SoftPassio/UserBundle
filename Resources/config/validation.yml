@@ -9,3 +9,11 @@ AppVerk\UserBundle\Entity\User:
             - NotBlank: ~
             - Type:
                 type: alnum
+        firstName:
+            - NotBlank: ~
+            - Type:
+                type: alnum
+        lastName:
+            - NotBlank: ~
+            - Type:
+                type: alnum
