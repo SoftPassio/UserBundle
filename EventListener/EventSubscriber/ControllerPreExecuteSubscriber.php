@@ -87,7 +87,6 @@ class ControllerPreExecuteSubscriber implements EventSubscriberInterface
         $controllerParts = explode('\\', $controllerEvent->getRequest()->attributes->get('_controller'));
         $controllerName = array_reverse($controllerParts)[0];
 
-
         if ($controllerName == self::TEST_REDIRECT_ACTION) {
             return true;
         }

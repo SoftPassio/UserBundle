@@ -92,7 +92,7 @@ class AclProvider
                         continue;
                     }
                     foreach ($methodsArray as $method) {
-                        if(empty($method['allow'])){
+                        if(empty($method['allow']) && $controller === $controllerActionParams[0] && $method['action'] === $controllerActionParams[1]){
                             return true;
                         }
                         if ($controller !== $controllerActionParams[0] || $method['action'] !== $controllerActionParams[1]) {
