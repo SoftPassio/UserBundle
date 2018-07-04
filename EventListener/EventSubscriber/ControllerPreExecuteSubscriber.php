@@ -84,14 +84,15 @@ class ControllerPreExecuteSubscriber implements EventSubscriberInterface
             return true;
         }
 
-        $controllerParts = explode('\\', $controllerEvent->getRequest()->attributes->get('_controller'));
+        $action = $controllerEvent->getRequest()->attributes->get('_controller');
+        $controllerParts = explode('\\', $action);
         $controllerName = array_reverse($controllerParts)[0];
 
         if ($controllerName == self::TEST_REDIRECT_ACTION) {
             return true;
         }
 
-        $status = $this->aclProvider->isGranted($this->user, $controllerName);
+        $status = $this->aclProvider->isGranted($this->user, $action);
         if ($status !== true) {
             $route = $this->aclProvider->getUnauthorizedRedirect();
             $redirectUrl = $this->router->generate($route);
