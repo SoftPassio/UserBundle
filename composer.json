@@ -1,10 +1,10 @@
 {
-  "name": "app-verk/user-bundle",
-  "description": "Appverk user bundle",
+  "name": "soft-passio/user-bundle",
+  "description": "SoftPassio user bundle",
   "type": "symfony-bundle",
   "autoload": {
     "psr-4": {
-      "AppVerk\\UserBundle\\": ""
+      "SoftPassio\\UserBundle\\": ""
     }
   },
   "authors": [
