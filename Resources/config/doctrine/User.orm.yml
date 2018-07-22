@@ -28,8 +28,8 @@ AppVerk\UserBundle\Entity\User:
             type: string
             scale: 0
             length: null
-            unique: true
-            nullable: false
+            unique: false
+            nullable: true
             precision: 0
         password:
             type: string
