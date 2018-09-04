@@ -1,4 +1,4 @@
-Appverk UserBundle documentation v1.0.2
+Appverk UserBundle documentation v2.0
 =======================================
 
 Simple and lightweight User bundle for Symfony 3 projects. Provides user and
