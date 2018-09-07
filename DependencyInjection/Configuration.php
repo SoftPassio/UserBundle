@@ -3,6 +3,7 @@
 namespace AppVerk\UserBundle\DependencyInjection;
 
 use AppVerk\Components\Model\UserInterface;
+use AppVerk\UserBundle\Security\SimpleAccessResolver;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -16,16 +17,10 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('app_verk_app_user', 'array')->children();
 
         $rootNode
-            ->scalarNode('default_role')->defaultValue(UserInterface::ROLE_DEFAULT)->end()
-            ->arrayNode('acl')
-                ->addDefaultsIfNotSet()
-                ->children()
-                    ->booleanNode('enabled')->defaultValue(false)->end()
-                    ->scalarNode('redirect_path')->defaultValue(null)->end()
-                ->end()
-            ->end();
+            ->scalarNode('default_role')->defaultValue(UserInterface::ROLE_DEFAULT)->end();
 
         $this->addEntitiesConfig($rootNode);
+        $this->addAclConfig($rootNode);
 
         return $treeBuilder;
     }
@@ -38,6 +33,21 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->scalarNode('user_class')->cannotBeEmpty()->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
+    }
+
+    private function addAclConfig(NodeBuilder $rootNode)
+    {
+        $rootNode
+            ->arrayNode('acl')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->booleanNode('enabled')->defaultFalse()->end()
+                    ->scalarNode('access_resolver_class')->defaultValue(SimpleAccessResolver::class)->end()
+                    ->scalarNode('access_denied_path')->defaultNull()->end()
+                ->end()
+            ->end()
+        ;
     }
 }

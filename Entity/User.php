@@ -3,11 +3,10 @@
 namespace AppVerk\UserBundle\Entity;
 
 use AppVerk\Components\Model\UserInterface;
-use DateTime;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
-abstract class User implements UserInterface
+abstract class User implements UserInterface, RoleableInterface
 {
     use SoftDeleteableEntity;
     use TimestampableEntity;
