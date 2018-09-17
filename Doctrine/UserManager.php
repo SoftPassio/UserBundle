@@ -34,7 +34,7 @@ class UserManager extends AbstractManager implements UserManagerInterface
         return base64_encode(random_bytes(30));
     }
 
-    private function baseCreateUser($username, $email, $password, $role)
+    protected function baseCreateUser($username, $email, $password, $role)
     {
         /** @var UserInterface $user */
         $user = new $this->className();
@@ -67,7 +67,7 @@ class UserManager extends AbstractManager implements UserManagerInterface
         $this->remove($user);
     }
 
-    private function softRemove(UserInterface $user)
+    protected function softRemove(UserInterface $user)
     {
         $rand = random_int(9, 99999);
         $user->setEnabled(false);
