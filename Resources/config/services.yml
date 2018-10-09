@@ -12,13 +12,15 @@ services:
         # but if a service is unused, it's removed anyway
         exclude: '../../{Entity,Repository,Tests,Doctrine}'
 
-    AppVerk\UserBundle\EventListener\EventSubscriber\ControllerPreExecuteSubscriber:
-        arguments:
-            $aclEnabled: '%app_verk_app_user.acl.enabled%'
-            $environment: '%kernel.environment%'
+    AppVerk\UserBundle\Security\AccessResolverInterface:
+        class: '%app_verk_app_user.acl.access_resolver_class%'
 
-    AppVerk\UserBundle\Service\Acl\AclProvider:
-        arguments:
-            $rootDir: '%kernel.root_dir%'
-            $aclEnabled: '%app_verk_app_user.acl.enabled%'
-            $redirectPath: '%app_verk_app_user.acl.redirect_path%'
+    AppVerk\UserBundle\EventListener\ControllerActionAccessListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller }
+        calls:
+            - method: setSettings
+              arguments:
+                  $aclEnabled: '%app_verk_app_user.acl.enabled%'
+                  $accessDeniedPath: '%app_verk_app_user.acl.access_denied_path%'
+        public: true

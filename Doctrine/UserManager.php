@@ -19,7 +19,7 @@ class UserManager extends AbstractManager implements UserManagerInterface
     {
         $user = $this->baseCreateUser($username, $email, $password, $role);
 
-        $this->persistAndFlash($user);
+        $this->persistAndFlush($user);
 
         return true;
     }

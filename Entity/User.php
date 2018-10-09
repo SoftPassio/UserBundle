@@ -1,72 +1,58 @@
 <?php
-
 namespace AppVerk\UserBundle\Entity;
 
 use AppVerk\Components\Model\UserInterface;
-use DateTime;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
-abstract class User implements UserInterface
+abstract class User implements UserInterface, RoleableInterface
 {
     use SoftDeleteableEntity;
     use TimestampableEntity;
-
     /**
      * @var string
      */
     protected $username;
-
     /**
      * @var string
      */
     protected $firstName;
-
     /**
      * @var string
      */
     protected $lastName;
-
     /**
      * @var string
      */
     protected $email;
-
     /**
      * @var string
      */
     protected $password;
-
     /**
      * @var string
      */
     protected $salt;
-
     /**
      * @var array
      */
     protected $roles;
-
     /**
      * @var boolean
      */
     protected $enabled;
-
     /**
      * @var \DateTime
      */
     protected $passwordRequestedAt;
-
     /**
      * @var string
      */
     protected $passwordRequestToken;
-
     /**
      * @var string
      */
     protected $phone;
-
     /**
      * @return mixed
      */
@@ -74,13 +60,11 @@ abstract class User implements UserInterface
     {
         return $this->id;
     }
-
     public function __construct()
     {
         $this->enabled = false;
         $this->roles = [];
     }
-
     /**
      * @return string
      */
@@ -88,7 +72,6 @@ abstract class User implements UserInterface
     {
         return $this->username;
     }
-
     /**
      * @param string $username
      */
@@ -96,7 +79,6 @@ abstract class User implements UserInterface
     {
         $this->username = $username;
     }
-
     /**
      * @return string
      */
@@ -104,7 +86,6 @@ abstract class User implements UserInterface
     {
         return $this->firstName;
     }
-
     /**
      * @param string $firstName
      */
@@ -112,7 +93,6 @@ abstract class User implements UserInterface
     {
         $this->firstName = $firstName;
     }
-
     /**
      * @return string
      */
@@ -120,7 +100,6 @@ abstract class User implements UserInterface
     {
         return $this->lastName;
     }
-
     /**
      * @param string $lastName
      */
@@ -128,7 +107,6 @@ abstract class User implements UserInterface
     {
         $this->lastName = $lastName;
     }
-
     /**
      * @return string
      */
@@ -136,7 +114,6 @@ abstract class User implements UserInterface
     {
         return $this->email;
     }
-
     /**
      * @param string $email
      */
@@ -144,7 +121,6 @@ abstract class User implements UserInterface
     {
         $this->email = $email;
     }
-
     /**
      * @return string
      */
@@ -152,7 +128,6 @@ abstract class User implements UserInterface
     {
         return $this->password;
     }
-
     /**
      * @param string $password
      */
@@ -160,7 +135,6 @@ abstract class User implements UserInterface
     {
         $this->password = $password;
     }
-
     /**
      * @return string
      */
@@ -168,7 +142,6 @@ abstract class User implements UserInterface
     {
         return $this->salt;
     }
-
     /**
      * @param string $salt
      */
@@ -176,7 +149,6 @@ abstract class User implements UserInterface
     {
         $this->salt = $salt;
     }
-
     /**
      * @return mixed
      */
@@ -184,7 +156,6 @@ abstract class User implements UserInterface
     {
         return $this->roles;
     }
-
     /**
      * @param mixed $enabled
      */
@@ -192,7 +163,6 @@ abstract class User implements UserInterface
     {
         $this->enabled = $enabled;
     }
-
     /**
      * @return mixed
      */
@@ -200,7 +170,6 @@ abstract class User implements UserInterface
     {
         return $this->passwordRequestedAt;
     }
-
     /**
      * @param mixed $passwordRequestedAt
      */
@@ -208,7 +177,6 @@ abstract class User implements UserInterface
     {
         $this->passwordRequestedAt = $passwordRequestedAt;
     }
-
     /**
      * @return mixed
      */
@@ -216,7 +184,6 @@ abstract class User implements UserInterface
     {
         return $this->passwordRequestToken;
     }
-
     /**
      * @param mixed $passwordRequestToken
      */
@@ -224,7 +191,6 @@ abstract class User implements UserInterface
     {
         $this->passwordRequestToken = $passwordRequestToken;
     }
-
     /**
      * @return mixed
      */
@@ -232,7 +198,6 @@ abstract class User implements UserInterface
     {
         return $this->phone;
     }
-
     /**
      * @param mixed $phone
      */
@@ -240,12 +205,10 @@ abstract class User implements UserInterface
     {
         $this->phone = $phone;
     }
-
     public function eraseCredentials()
     {
         return;
     }
-
     /**
      * Checks whether the user's account has expired.
      *
@@ -260,7 +223,6 @@ abstract class User implements UserInterface
     {
         return true;
     }
-
     /**
      * Checks whether the user is locked.
      *
@@ -275,7 +237,6 @@ abstract class User implements UserInterface
     {
         return true;
     }
-
     /**
      * Checks whether the user's credentials (password) has expired.
      *
@@ -290,7 +251,6 @@ abstract class User implements UserInterface
     {
         return true;
     }
-
     /**
      * Checks whether the user is enabled.
      *
@@ -305,13 +265,11 @@ abstract class User implements UserInterface
     {
         return (bool)$this->enabled;
     }
-
     public function isPasswordRequestNonExpired()
     {
         return $this->getPasswordRequestedAt() instanceof \DateTime &&
             $this->getPasswordRequestedAt()->getTimestamp() + self::TOKEN_TTL > time();
     }
-
     public function hasRole($searchRole)
     {
         foreach ($this->roles as $role) {
@@ -319,20 +277,16 @@ abstract class User implements UserInterface
                 return true;
             }
         }
-
         return false;
     }
-
     public function setRoles(array $roles)
     {
         $this->roles = [];
         foreach ($roles as $role) {
             $this->addRole($role);
         }
-
         return $this;
     }
-
     /**
      * Set role
      *
@@ -345,29 +299,23 @@ abstract class User implements UserInterface
             return $this;
         }
         $this->roles[] = (string)$newRole;
-
         return $this;
     }
-
     public function removeRole($role)
     {
         if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
             $this->roles = array_values($this->roles);
         }
-
         return $this;
     }
-
     public function __toString()
     {
         if ($this->firstName && $this->lastName) {
             return $this->firstName.' '.$this->lastName;
         }
-
         return $this->username ? $this->username : '';
     }
-
     public function serialize()
     {
         return serialize(
@@ -380,7 +328,6 @@ abstract class User implements UserInterface
             ]
         );
     }
-
     public function unserialize($serialized)
     {
         $data = unserialize($serialized);
