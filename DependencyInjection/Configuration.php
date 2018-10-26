@@ -46,6 +46,7 @@ class Configuration implements ConfigurationInterface
                     ->booleanNode('enabled')->defaultFalse()->end()
                     ->scalarNode('access_resolver_class')->defaultValue(SimpleAccessResolver::class)->end()
                     ->scalarNode('access_denied_path')->defaultNull()->end()
+                    ->booleanNode('access_denied_show_flash_message')->defaultFalse()->end()
                 ->end()
             ->end()
         ;

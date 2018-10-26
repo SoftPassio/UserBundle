@@ -21,6 +21,7 @@ class UserExtension extends Extension
         $container->setParameter('app_verk_app_user.acl.enabled', $config['acl']['enabled']);
         $container->setParameter('app_verk_app_user.acl.access_resolver_class', $config['acl']['access_resolver_class']);
         $container->setParameter('app_verk_app_user.acl.access_denied_path', $config['acl']['access_denied_path']);
+        $container->setParameter('app_verk_app_user.acl.access_denied_show_flash_message', $config['acl']['access_denied_show_flash_message']);
 
         foreach ($config['entities'] as $key => $entity) {
             $container->setParameter(sprintf('app_verk_app_user.entities.%s', $key), $entity);

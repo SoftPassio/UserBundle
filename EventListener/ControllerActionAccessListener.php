@@ -5,6 +5,7 @@ namespace AppVerk\UserBundle\EventListener;
 use AppVerk\UserBundle\Entity\RoleableInterface;
 use AppVerk\UserBundle\Security\AccessResolverInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\RouterInterface;
@@ -17,32 +18,47 @@ class ControllerActionAccessListener
     private $accessDeniedPath;
 
     /**
+     * @var bool
+     */
+    private $accessDeniedShowFlashMessage = false;
+
+    /**
      * @var AccessResolverInterface
      */
     private $accessResolver;
+
     /**
      * @var TokenStorageInterface
      */
     private $tokenStorage;
+
     /**
      * @var RouterInterface
      */
     private $router;
 
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+
     public function __construct(
         AccessResolverInterface $accessResolver,
         TokenStorageInterface $tokenStorage,
-        RouterInterface $router
+        RouterInterface $router,
+        SessionInterface $session
     ) {
         $this->accessResolver = $accessResolver;
         $this->tokenStorage = $tokenStorage;
         $this->router = $router;
+        $this->session = $session;
     }
 
-    public function setSettings($aclEnabled, $accessDeniedPath)
+    public function setSettings($aclEnabled, $accessDeniedPath, bool $accessDeniedShowFlashMessage = false)
     {
         $this->aclEnabled = $aclEnabled;
         $this->accessDeniedPath = $accessDeniedPath;
+        $this->accessDeniedShowFlashMessage = $accessDeniedShowFlashMessage;
     }
 
     /**
@@ -82,6 +98,10 @@ class ControllerActionAccessListener
 
         if (!$this->router->getRouteCollection()->get($this->accessDeniedPath)) {
             throw new \Exception('access_denied_path parameter under app_verk_app_user.acl is not valid action name');
+        }
+
+        if ($this->accessDeniedShowFlashMessage) {
+            $this->session->getFlashBag()->add('danger', 'security.route.access_denied');
         }
 
         $event->setController(

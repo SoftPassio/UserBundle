@@ -23,4 +23,5 @@ services:
               arguments:
                   $aclEnabled: '%app_verk_app_user.acl.enabled%'
                   $accessDeniedPath: '%app_verk_app_user.acl.access_denied_path%'
+                  $accessDeniedShowFlashMessage: '%app_verk_app_user.acl.access_denied_show_flash_message%'
         public: true

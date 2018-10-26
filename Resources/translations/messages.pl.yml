@@ -1,0 +1,3 @@
+security:
+    route:
+        access_denied: Nie masz uprawnień do odwiedzenia adresu.
