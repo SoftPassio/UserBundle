@@ -13,6 +13,15 @@ use Symfony\Component\Console\Command\Command;
 
 class CreateUserCommand extends Command
 {
+    private $userManager;
+
+    public function __construct(UserManager $userManager)
+    {
+        $this->userManager = $userManager;
+
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -34,21 +43,18 @@ EOT
         $email = $input->getArgument('email');
         $password = $input->getArgument('password');
 
-        /** * @var UserManager $userManager */
-        $userManager = $this->getContainer()->get(UserManager::class);
-
-        $user = $userManager->findUserByUsername($username);
+        $user = $this->userManager->findUserByUsername($username);
 
         if ($user instanceof User) {
             throw new \Exception("User ".$username." already exists!");
         }
 
-        $userByEmail = $userManager->findUserByEmail($email);
+        $userByEmail = $this->userManager->findUserByEmail($email);
         if ($userByEmail instanceof UserInterface) {
             throw new \Exception("User email: ".$email." already exists!");
         }
 
-        $status = $userManager->createUser($username, $email, $password, UserInterface::ROLE_MASTER);
+        $status = $this->userManager->createUser($username, $email, $password, UserInterface::ROLE_MASTER);
 
         $io = new SymfonyStyle($input, $output);
         if ($status === true) {
