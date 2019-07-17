@@ -1,9 +1,9 @@
 <?php
 
-namespace AppVerk\UserBundle\Security;
+namespace SoftPassio\UserBundle\Security;
 
-use AppVerk\UserBundle\Annotation\AVSecurity;
-use AppVerk\UserBundle\Entity\RoleableInterface;
+use SoftPassio\UserBundle\Annotation\AVSecurity;
+use SoftPassio\UserBundle\Entity\RoleableInterface;
 use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\Reader;
 use ReflectionClass;
@@ -12,18 +12,22 @@ class SimpleAccessResolver implements AccessResolverInterface
 {
     const TYPE_ALLOW = 'allow';
     const TYPE_DISALLOW = 'disallow';
+
     /**
      * @var Reader
      */
     private $reader;
+
     /**
      * @var RoleableInterface
      */
     private $user;
+
     /**
      * @var ReflectionClass
      */
     private $reflectionClass;
+
     private $controllerParams;
 
     public function __construct(Reader $reader)
@@ -34,6 +38,7 @@ class SimpleAccessResolver implements AccessResolverInterface
     public function resolve(RoleableInterface $user, $action): bool
     {
         $controllerActionParams = explode("::", $action, 2);
+
         $this->controllerParams = $controllerActionParams;
         $this->user = $user;
         $this->reflectionClass = new ReflectionClass($this->controllerParams[0]);
@@ -46,6 +51,7 @@ class SimpleAccessResolver implements AccessResolverInterface
         if (empty($securityAnnotation->allow) && empty($securityAnnotation->disallow)) {
             throw new AnnotationException("Set at least one method allow or disallow with access groups");
         }
+
         if (!empty($securityAnnotation->allow) && !empty($securityAnnotation->disallow)) {
             throw new AnnotationException(
                 "Logical exception u cant at the same time set allow and disallow access for user groups"
@@ -66,10 +72,12 @@ class SimpleAccessResolver implements AccessResolverInterface
     private function checkMethod()
     {
         $method = $this->reflectionClass->getMethod($this->controllerParams[1]);
+
         $actionAnnotation = $this->reader->getMethodAnnotation(
             $method,
             AVSecurity::class
         );
+
         $this->validateAnnnotation($actionAnnotation);
 
         return (empty($actionAnnotation->allow)) ? $this->checkGroups($actionAnnotation->disallow, self::TYPE_DISALLOW)
@@ -82,9 +90,11 @@ class SimpleAccessResolver implements AccessResolverInterface
             $this->reflectionClass,
             AVSecurity::class
         );
+
         if (!$classAnnotation) {
             return true;
         }
+
         $this->validateAnnnotation($classAnnotation);
 
         return (empty($classAnnotation->allow)) ? $this->checkGroups($classAnnotation->disallow, self::TYPE_DISALLOW)

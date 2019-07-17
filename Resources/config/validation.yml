@@ -1,15 +1,4 @@
-AppVerk\UserBundle\Entity\User:
+SoftPassio\UserBundle\Entity\User:
     properties:
         username:
             - NotBlank: ~
-            - Regex:
-                pattern: "/^[a-zA-Z0-9_]+$/"
-                message: entity.user.username.alphanumeric
-        firstName:
-            - Regex:
-                pattern: "/^[a-zA-Z0-9_ĘęÓóĄąŚśŁłŻżŹźĆćŃń]+$/"
-                message: entity.user.first_name.alphanumeric
-        lastName:
-            - Regex:
-                pattern: "/^[a-zA-Z0-9_ĘęÓóĄąŚśŁłŻżŹźĆćŃń]+$/"
-                message: entity.user.last_name.alphanumeric

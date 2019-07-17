@@ -1,8 +1,8 @@
 <?php
 
-namespace AppVerk\UserBundle\Security;
+namespace SoftPassio\UserBundle\Security;
 
-use AppVerk\UserBundle\Entity\RoleableInterface;
+use SoftPassio\UserBundle\Entity\RoleableInterface;
 
 interface AccessResolverInterface
 {

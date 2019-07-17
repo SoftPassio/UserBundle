@@ -1,8 +1,12 @@
-Appverk UserBundle documentation v1.0.2
+SoftPassio UserBundle documentation v2.0
 =======================================
 
 Simple and lightweight User bundle for Symfony 3 projects. Provides user and
 role functionalities with ACL support.
+
+Old version:
+-------------
+If u need help with 1.* branch, visit [v1.x documentation](https://github.com/SoftPassio/UserBundle/tree/v1).
 
 Installation:
 -------------
@@ -10,7 +14,7 @@ Installation:
 Required the bundle with composer:
 
 ~~~~ {.sourceCode .}
-$ php composer.phar require app-verk/user-bundle
+$ php composer.phar require soft-passio/user-bundle
 ~~~~
 
 Configuration
@@ -24,7 +28,7 @@ public function registerBundles()
 {
     $bundles = [
         ...
-        new AppVerk\UserBundle\UserBundle(),
+        new SoftPassio\UserBundle\UserBundle(),
         ...
     ];
 }
@@ -41,7 +45,7 @@ Add a new config file, for example user.yml
 
      acl: 
         enabled:       #true|false defines to use or not to use ACL
-        redirect_path: #path where user should be redirect when he dont have privileges to action
+        access_denied_path: #route bame where user should be redirect when he dont have privileges to action
 
 ~~~~
 Import user.yml file to config.yml
@@ -61,7 +65,7 @@ Next create two entities in your bundle (E.g. AppBundle\Entity):
 
 namespace AppBundle\Entity;
 
-use AppVerk\UserBundle\Entity\User as AbstractUser;
+use SoftPassio\UserBundle\Entity\User as AbstractUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -103,19 +107,59 @@ Enable ACL
  user:
      acl
         enabled: true
-        redirect_path: #routing path
+        access_denied_path: #route name
 ~~~~
 
-Put following acl.yml file in each bundle You want to control using ACL.
-acl.yml file should be placed in Resources/config/ directory
+Use annotation to define protected action
 
+```php
+// ./src/AppBundle/Controller/DefaultController.php
+
+...
+use SoftPassio\UserBundle\Annotation\AVSecurity;
+...
+
+    /**
+     * ...
+     * @AVSecurity(allow={"ROLE_ADMIN"}, disallow={"ROLE_X"}, name="list", group="default")
+     */
+    public function listAction()
+    {
+        return $this->render('@App/controller/user/list.html.twig');
+    }
+    
+```
+
+Custom AccessResolver
+---
+In some cases u need to create your own logic to decide about access to action. In that case u just need to create custom accessResolver and put your logic
+
+```php
+// ./src/AppBundle/Security/CustomAccessResolver.php
+
+...
+use SoftPassio\UserBundle\Security\AccessResolverInterface;
+...
+
+class SimpleAccessResolver implements AccessResolverInterface
+{
+    public function resolve(RoleableInterface $user, $action): bool
+    {
+    // your own logic
+    }
+}
+```
+
+Insert new resolver to configuration file:
 ~~~~ {.sourceCode .yaml}
-name: #Bundle name or short description
-controllers:
-    ExampleController: #controller name
-        - { action: indexAction, label: Main page access, group: Main page, section: Front }
+#./app/config/user.yml
 
-excluded_controllers: #list of controllers and actions to which all users access will be granted
-    ExampleController:
-        - loginAction
+ user:
+     entities:
+        user_class: #E.g. AppBundle\Entity\User
+
+     acl: 
+        enabled:       #true|false defines to use or not to use ACL
+        access_denied_path: #route bame where user should be redirect when he dont have privileges to action
+        access_resolver_class: AppBundle\Security\CustomAccessResolver
 ~~~~

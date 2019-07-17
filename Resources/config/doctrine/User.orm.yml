@@ -1,4 +1,4 @@
-AppVerk\UserBundle\Entity\User:
+SoftPassio\UserBundle\Entity\User:
     type: mappedSuperclass
     fields:
         username:

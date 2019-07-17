@@ -1,8 +1,8 @@
 <?php
 
-namespace AppVerk\UserBundle\Security\User;
+namespace SoftPassio\UserBundle\Security\User;
 
-use AppVerk\Components\Doctrine\UserManagerInterface;
+use SoftPassio\Components\Doctrine\UserManagerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;

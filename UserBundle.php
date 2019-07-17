@@ -1,6 +1,6 @@
 <?php
 
-namespace AppVerk\UserBundle;
+namespace SoftPassio\UserBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

@@ -1,7 +1,8 @@
 <?php
-namespace AppVerk\UserBundle\Entity;
 
-use AppVerk\Components\Model\UserInterface;
+namespace SoftPassio\UserBundle\Entity;
+
+use SoftPassio\Components\Model\UserInterface;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 

@@ -4,10 +4,10 @@ services:
         autoconfigure: true
         public: false
 
-    AppVerk\UserBundle\Doctrine\UserManager:
+    SoftPassio\UserBundle\Doctrine\UserManager:
         public: true
         arguments:
-            $className: '%app_verk_app_user.entities.user_class%'
+            $className: '%soft_passio_app_user.entities.user_class%'
         calls:
             - method: setEncoder
               arguments:

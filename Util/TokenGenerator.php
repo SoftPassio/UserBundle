@@ -1,8 +1,8 @@
 <?php
 
-namespace AppVerk\UserBundle\Util;
+namespace SoftPassio\UserBundle\Util;
 
-use AppVerk\Components\Util\TokenGeneratorInterface;
+use SoftPassio\Components\Util\TokenGeneratorInterface;
 
 class TokenGenerator implements TokenGeneratorInterface
 {

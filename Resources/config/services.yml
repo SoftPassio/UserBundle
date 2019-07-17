@@ -6,21 +6,22 @@ services:
 
     # makes classes in src/UserBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    AppVerk\UserBundle\:
+    SoftPassio\UserBundle\:
         resource: '../../*'
         # you can exclude directories or files
         # but if a service is unused, it's removed anyway
         exclude: '../../{Entity,Repository,Tests,Doctrine}'
 
-    AppVerk\UserBundle\Security\AccessResolverInterface:
-        class: '%app_verk_app_user.acl.access_resolver_class%'
+    SoftPassio\UserBundle\Security\AccessResolverInterface:
+        class: '%soft_passio_app_user.acl.access_resolver_class%'
 
-    AppVerk\UserBundle\EventListener\ControllerActionAccessListener:
+    SoftPassio\UserBundle\EventListener\ControllerActionAccessListener:
         tags:
             - { name: kernel.event_listener, event: kernel.controller }
         calls:
             - method: setSettings
               arguments:
-                  $aclEnabled: '%app_verk_app_user.acl.enabled%'
-                  $accessDeniedPath: '%app_verk_app_user.acl.access_denied_path%'
+                  $aclEnabled: '%soft_passio_app_user.acl.enabled%'
+                  $accessDeniedPath: '%soft_passio_app_user.acl.access_denied_path%'
+                  $accessDeniedShowFlashMessage: '%soft_passio_app_user.acl.access_denied_show_flash_message%'
         public: true

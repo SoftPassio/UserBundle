@@ -1,12 +1,12 @@
 <?php
 
-namespace AppVerk\UserBundle\Doctrine;
+namespace SoftPassio\UserBundle\Doctrine;
 
-use AppVerk\Components\Doctrine\AbstractManager;
-use AppVerk\Components\Doctrine\UserManagerInterface;
+use SoftPassio\Components\Doctrine\AbstractManager;
+use SoftPassio\Components\Doctrine\UserManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use AppVerk\Components\Model\UserInterface;
+use SoftPassio\Components\Model\UserInterface;
 
 class UserManager extends AbstractManager implements UserManagerInterface
 {
@@ -34,7 +34,7 @@ class UserManager extends AbstractManager implements UserManagerInterface
         return base64_encode(random_bytes(30));
     }
 
-    private function baseCreateUser($username, $email, $password, $role)
+    protected function baseCreateUser($username, $email, $password, $role)
     {
         /** @var UserInterface $user */
         $user = new $this->className();
@@ -67,7 +67,7 @@ class UserManager extends AbstractManager implements UserManagerInterface
         $this->remove($user);
     }
 
-    private function softRemove(UserInterface $user)
+    protected function softRemove(UserInterface $user)
     {
         $rand = random_int(9, 99999);
         $user->setEnabled(false);

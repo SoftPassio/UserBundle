@@ -1,6 +1,6 @@
 <?php
 
-namespace AppVerk\UserBundle\Entity;
+namespace SoftPassio\UserBundle\Entity;
 
 interface RoleableInterface
 {
