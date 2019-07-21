@@ -19,7 +19,7 @@ class UserManager extends AbstractManager implements UserManagerInterface
     {
         $user = $this->baseCreateUser($username, $email, $password, $role);
 
-        $this->persistAndFlash($user);
+        $this->persistAndFlush($user);
 
         return true;
     }
@@ -67,7 +67,7 @@ class UserManager extends AbstractManager implements UserManagerInterface
         $this->remove($user);
     }
 
-    protected function softRemove(UserInterface $user)
+    private function softRemove(UserInterface $user)
     {
         $rand = random_int(9, 99999);
         $user->setEnabled(false);
