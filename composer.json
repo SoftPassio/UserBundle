@@ -9,12 +9,12 @@
   },
   "authors": [
     {
-      "name": "Rafał Narowski",
-      "email": "naros1988@o2.pl"
-    },
-    {
       "name": "Michał Jędraszczyk",
       "email": "michal.jedraszczyk@appverk.com"
+    },
+    {
+      "name": "Rafał Narowski",
+      "email": "naros1988@o2.pl"
     }
   ],
   "keywords": [
